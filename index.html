@@ -18,7 +18,28 @@
 		</style>
 	</head>
 	<body>
+        <script src="build/stats.js"></script>
+        <script>
+            var array = [];
+            for ( var i = 0; i < 3; i ++ ) {
+                var stats = new Stats();
+                stats.showPanel(2-i);
+                stats.dom.style.position = 'relative';
+                stats.dom.style.float = 'right';
+                document.body.appendChild( stats.dom );
+                array.push( stats );
+            }
+            function animate() {
+                for ( var i = 0; i < array.length; i ++ ) {
+                    var stats = array[ i ];
+                    stats.update();
+                }
+                requestAnimationFrame( animate );
+            }
+            animate();
+        </script>
 		<div id="glsl_editor"></div>
+        <span class="forktext">forked from <a class="forklink" href="/patriciogonzalezvivo/glslEditor">patriciogonzalezvivo/glslEditor</a></span>
 	</body>
 
 	<link type="text/css" rel="stylesheet" href="build/glslEditor.css">
