@@ -24,8 +24,8 @@
             for ( var i = 0; i < 3; i ++ ) {
                 var stats = new Stats();
                 stats.showPanel(2-i);
-                stats.dom.style.position = 'relative';
-                stats.dom.style.float = 'right';
+                stats.dom.style.position = 'fixed';
+                stats.dom.style.right =  i*80 +'px';
                 document.body.appendChild( stats.dom );
                 array.push( stats );
             }
