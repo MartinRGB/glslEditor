@@ -35,6 +35,10 @@ precision mediump float;
 uniform vec2 u_resolution;
 uniform vec2 u_mouse;
 uniform float u_time;
+//Shader Toy Basic Uniform
+#define iGlobalTime u_time
+#define iResolution u_resolution
+#define iMouse u_mouse
 
 void main() {
     vec2 st = gl_FragCoord.xy/u_resolution.xy;
