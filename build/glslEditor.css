@@ -3352,16 +3352,16 @@ a.ge_panel_tab_close {
     margin: 0;
     padding: 0;
     z-index: 200;
-		width:540px;
-		height:960px;
+		width:432px;
+		height:936px;
 }
 
 .ge_canvas {
     margin: 0;
     padding: 0;
     z-index: 200;
-		width:540px;
-		height:960px;
+		width:432px;
+		height:936px;
 }
 
 .ge_control {
