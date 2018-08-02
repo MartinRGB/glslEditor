@@ -18534,6 +18534,8 @@ var GlslCanvas = (function () {
                 this.uniform('1i', 'sampler2D', name, this.texureIndex);
                 this.textures[name].bind(this.texureIndex);
                 this.uniform('2f', 'vec2', name + 'Resolution', this.textures[name].width, this.textures[name].height);
+                console.log(this.textures[name].width)
+                console.log(this.textures[name].height)
                 this.texureIndex++;
             }
         }
@@ -19934,7 +19936,7 @@ var _crossStorage = _dereq_('cross-storage');
 
 var STORAGE_LAST_EDITOR_CONTENT = 'last-content';
 
-var EMPTY_FRAG_SHADER = '// Author:\n// Title:\n\n#ifdef GL_ES\nprecision mediump float;\n#endif\n\nuniform vec2 u_resolution;\nuniform vec2 u_mouse;\nuniform float u_time;\nuniform sampler2D u_tex0;\n//Shader Toy Basic Uniform\n#define iTime u_time\n#define iResolution u_resolution\n#define iMouse u_mouse\n\nvoid main() {\n    vec2 st = gl_FragCoord.xy/u_resolution.xy;\n    st.x *= u_resolution.x/u_resolution.y;\n\n    vec3 color = vec3(0.);\n    color = vec3(st.x,st.y,abs(sin(u_time))) + texture2D(u_tex0,st).xyz;\n\n    gl_FragColor = vec4(color,1.0);\n}';
+var EMPTY_FRAG_SHADER = '// Author:\n// Title:\n\n#ifdef GL_ES\nprecision mediump float;\n#endif\n\nuniform vec2 u_resolution;\nuniform vec2 u_mouse;\nuniform float u_time;\nuniform sampler2D u_tex0;\nuniform vec2 u_tex0Resolution;\n//Shader Toy Basic Uniform\n#define iTime u_time\n#define iResolution u_resolution\n#define iMouse u_mouse\n\nvoid main() {\n    vec2 st = gl_FragCoord.xy/u_resolution.xy;\n    st.x *= u_resolution.x/u_resolution.y;\n\n    vec3 color = vec3(0.);\n    color = vec3(st.x,st.y,abs(sin(u_time))) + texture2D(u_tex0,st).xyz;\n\n    gl_FragColor = vec4(color,1.0);\n}';
 
 var GlslEditor = (function () {
     function GlslEditor(selector, options) {
