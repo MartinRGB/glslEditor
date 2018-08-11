@@ -18151,6 +18151,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 'use strict';
 
+
+
+
 var _createClass = _dereq_('babel-runtime/helpers/create-class')['default'];
 
 var _classCallCheck = _dereq_('babel-runtime/helpers/class-call-check')['default'];
@@ -18175,9 +18178,15 @@ var _toolsCommon = _dereq_('./tools/common');
 
 var _toolsMixin = _dereq_('./tools/mixin');
 
+// var slot1 = 1.0;
+// var slot2 = 0.5;
+
 var GlslCanvas = (function () {
     function GlslCanvas(canvas, options) {
         var _this = this;
+
+
+
 
         _classCallCheck(this, GlslCanvas);
 
@@ -18187,6 +18196,8 @@ var GlslCanvas = (function () {
 
         this.width = canvas.clientWidth;
         this.height = canvas.clientHeight;
+
+
 
         this.canvas = canvas;
         this.gl = undefined;
@@ -18534,8 +18545,8 @@ var GlslCanvas = (function () {
                 this.uniform('1i', 'sampler2D', name, this.texureIndex);
                 this.textures[name].bind(this.texureIndex);
                 this.uniform('2f', 'vec2', name + 'Resolution', this.textures[name].width, this.textures[name].height);
-                console.log(this.textures[name].width)
-                console.log(this.textures[name].height)
+                // console.log(this.textures[name].width)
+                // console.log(this.textures[name].height)
                 this.texureIndex++;
             }
         }
@@ -18595,6 +18606,9 @@ var GlslCanvas = (function () {
                 // set the resolution uniform
                 this.uniform('2f', 'vec2', 'u_resolution', this.canvas.width, this.canvas.height);
 
+                this.uniform('1f', 'float', 'u_slot1', slot1Spring.getCurrentValue());
+                this.uniform('1f', 'float', 'u_slot2', slot2Spring.getCurrentValue());
+
                 this.texureIndex = 0;
                 for (var tex in this.textures) {
                     this.uniformTexture(tex);
@@ -18645,7 +18659,9 @@ function loadAllGlslCanvas() {
             }
         }
     }
+
 }
+
 
 window.addEventListener('load', function () {
     loadAllGlslCanvas();
@@ -19936,7 +19952,7 @@ var _crossStorage = _dereq_('cross-storage');
 
 var STORAGE_LAST_EDITOR_CONTENT = 'last-content';
 
-var EMPTY_FRAG_SHADER = '// Author:\n// Title:\n\n#ifdef GL_ES\nprecision mediump float;\n#endif\n\nuniform vec2 u_resolution;\nuniform vec2 u_mouse;\nuniform float u_time;\nuniform sampler2D u_tex0;\nuniform vec2 u_tex0Resolution;\n//Shader Toy Basic Uniform\n#define iTime u_time\n#define iResolution u_resolution\n#define iMouse u_mouse\n\nvoid main() {\n    vec2 st = gl_FragCoord.xy/u_resolution.xy;\n    st.x *= u_resolution.x/u_resolution.y;\n\n    vec3 color = vec3(0.);\n    color = vec3(st.x,st.y,abs(sin(u_time))) + texture2D(u_tex0,st).xyz;\n\n    gl_FragColor = vec4(color,1.0);\n}';
+var EMPTY_FRAG_SHADER = '// Author:\n// Title:\n\n#ifdef GL_ES\nprecision mediump float;\n#endif\n\nuniform vec2 u_resolution;\nuniform vec2 u_mouse;\nuniform float u_time;\nuniform sampler2D u_tex0;\nuniform vec2 u_tex0Resolution;\nuniform float u_slot1;\nuniform float u_slot2;\n//Shader Toy Basic Uniform\n#define iTime u_time\n#define iResolution u_resolution\n#define iMouse u_mouse\n\nvoid main() {\n    vec2 st = gl_FragCoord.xy/u_resolution.xy;\n    st.x *= u_resolution.x/u_resolution.y;\n\n    vec3 color = vec3(0.);\n    color = vec3(st.x,st.y,abs(sin(u_time))) + texture2D(u_tex0,st).xyz;\n\n    gl_FragColor = vec4(color,1.0);\n}';
 
 var GlslEditor = (function () {
     function GlslEditor(selector, options) {
@@ -20299,6 +20315,8 @@ GlslWebComponent.prototype.createdCallback = function createdCallback() {
     }
 
     this.glslEditor = new GlslEditor(this, options);
+
+    
 };
 
 document.registerElement('glsl-editor', GlslWebComponent);
@@ -20471,6 +20489,7 @@ var Shader = (function () {
         // CREATE AND START GLSLCANVAS
         this.el_canvas = document.createElement('canvas');
         this.el_canvas.setAttribute('class', 'ge_canvas');
+        this.el_canvas.setAttribute('id', 'glsl_canvas');
         this.el_canvas.setAttribute('width', (this.options.canvas_width || this.options.canvas_size || '250') / window.devicePixelRatio);
         this.el_canvas.setAttribute('height', (this.options.canvas_height || this.options.canvas_size || '250') / window.devicePixelRatio);
         this.el_canvas.setAttribute('data-fragment', this.options.frag);
@@ -22456,14 +22475,18 @@ var _modalsExportModal = _dereq_('./modals/ExportModal');
 
 var _modalsExportModal2 = _interopRequireDefault(_modalsExportModal);
 
+
+
 var Menu = function Menu(main) {
     var _this = this;
+
 
     _classCallCheck(this, Menu);
 
     this.main = main;
     this.menus = {};
 
+    
     // CREATE MENU Container
     this.el = document.createElement('ul');
     this.el.setAttribute('class', 'ge_menu_bar');
@@ -22514,6 +22537,31 @@ var Menu = function Menu(main) {
                 _this.menus.autoupdate.name = '<i class="material-icons">autorenew</i> Update: ON';
                 // this.menus.autoupdate.button.style.color = 'white';
             }
+    });
+
+    var isSwitch = false;
+
+    this.menus.slot1 = new _MenuItem2['default'](this.el, 'ge_menu', 'S1', function (event) {
+      if(isSwitch){
+        slot1Spring.setEndValue(0);
+      }
+      else{
+        slot1Spring.setEndValue(1);
+      }
+      isSwitch = !isSwitch;
+    });
+
+    this.menus.vPageTurn = new _MenuItem2['default'](this.el, 'ge_menu', 'S2-0', function (event) {
+      slot2Spring.setEndValue(0);
+    });
+    this.menus.vPageTurn = new _MenuItem2['default'](this.el, 'ge_menu', 'S2-1', function (event) {
+      slot2Spring.setEndValue(1);
+    });
+    this.menus.vPageTurn = new _MenuItem2['default'](this.el, 'ge_menu', 'S2-2', function (event) {
+      slot2Spring.setEndValue(2);
+    });
+    this.menus.vPageTurn = new _MenuItem2['default'](this.el, 'ge_menu', 'S2-3', function (event) {
+      slot2Spring.setEndValue(3);
     });
 
     main.container.appendChild(this.el);
