@@ -18614,6 +18614,7 @@ var GlslCanvas = (function () {
                     this.uniformTexture(tex);
                 }
 
+
                 // Draw the rectangle.
                 this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
 
@@ -21834,6 +21835,7 @@ var MediaCapture = (function () {
                     var cap = _this2.video_capture = {};
                     cap.chunks = [];
                     cap.stream = _this2.canvas.captureStream();
+                    //### insert mp4
                     cap.options = { mimeType: 'video/webm' }; // TODO: support other format options
                     cap.media_recorder = new MediaRecorder(cap.stream, cap.options);
                     cap.media_recorder.ondataavailable = function (event) {
@@ -21854,10 +21856,11 @@ var MediaCapture = (function () {
                                     cap.stream.removeTrack(track);
                                 });
                             }
+
                             cap.stream = null;
                             cap.media_recorder = null;
                             _this2.video_capture = null;
-
+                            //### insert mp4
                             cap.resolve({ url: url, blob: blob, type: 'webm' });
                         }
                     };
@@ -22539,6 +22542,7 @@ var Menu = function Menu(main) {
             }
     });
 
+    // 添加插槽
     var isSwitch = false;
 
     this.menus.slot1 = new _MenuItem2['default'](this.el, 'ge_menu', 'S1', function (event) {
@@ -23711,6 +23715,7 @@ var Picker = (function () {
                     return;
                 }
                 _this.draw();
+                
             },
 
             // Starts animation rendering loop

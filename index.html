@@ -39,34 +39,34 @@
             animate();
         </script>
 		<div id="glsl_editor"></div>
-        <span class="forktext">forked from <a class="forklink" href="/patriciogonzalezvivo/glslEditor">patriciogonzalezvivo/glslEditor</a></span>
 	</body>
 
     <link type="text/css" rel="stylesheet" href="build/glslEditor.css">
+    <!-- <link type="text/css" rel="stylesheet" href="build/oppoSet.css"> -->
     <script type="text/javascript" src='build/rebound.js'></script>
 
-    <script type="text/javascript">
+        <script type="text/javascript">
 
-        var springSystem = new rebound.SpringSystem();
-        var slot1Spring = springSystem.createSpring(10, 10);
-        var slot2Spring = springSystem.createSpring(80, 20);
+            var springSystem = new rebound.SpringSystem();
+            var slot1Spring = springSystem.createSpring(0, 10);
+            var slot2Spring = springSystem.createSpring(80, 20);
 
-        slot1Spring.addListener({
-            onSpringUpdate: function(slot1Spring) {
-            var val = slot1Spring.getCurrentValue();
-            }
-        });
+            slot1Spring.addListener({
+                onSpringUpdate: function(slot1Spring) {
+                var val = slot1Spring.getCurrentValue();
+                }
+            });
 
-        slot2Spring.addListener({
-            onSpringUpdate: function(slot2Spring) {
-            var val = slot2Spring.getCurrentValue();
-            }
-        });
+            slot2Spring.addListener({
+                onSpringUpdate: function(slot2Spring) {
+                var val = slot2Spring.getCurrentValue();
+                }
+            });
 
-        slot1Spring.setCurrentValue(0.0);
-        slot2Spring.setCurrentValue(0.0);
-        
-  </script>
+            slot1Spring.setCurrentValue(0.0);
+            slot2Spring.setCurrentValue(0.0);
+            
+    </script>
     <script type="text/javascript" src="build/glslEditor.js"></script>
     <script type="text/javascript">
     	window.glslEditor = new GlslEditor('#glsl_editor', {
@@ -78,7 +78,7 @@
             watchHash: true,
             fileDrops: true,
             menu: true,
-            canvas_texture: ["data/noise6.jpg","data/noise7.png","data/noise3.png","data/noise9.png","data/noise2.jpg"]
+            canvas_texture: ["data/noise6.jpg","data/noise7.png","data/noise3.png","data/noise9.png","data/noise2.jpg","data/scrollview.png"]
 
     	});
         document.body.style.backgroundColor = window.getComputedStyle(glslEditor.editor.getWrapperElement(),null).getPropertyValue('background-color');

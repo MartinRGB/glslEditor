@@ -1836,7 +1836,7 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {
 
 .cm-s-monokai.CodeMirror {
     background: #272822;
-    color: #f8f8f2
+    color: #f8f8f2;
 }
 
 .cm-s-monokai div.CodeMirror-selected {
@@ -3164,7 +3164,7 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {
     color: #eefafa;
     background-color: #2f302b;
     font-family: Helvetica, Geneva, sans-serif;
-    font-weight: 400
+    font-weight: 400;
 }
 
 .ge_menu {
@@ -3272,8 +3272,10 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {
     margin: 0;
     padding-top: 5px;
     z-index: 300;
-    border-bottom: solid 1px #444
+    border-bottom: solid 1px #444;
+
 }
+
 
 li.ge_panel_tab {
     cursor: pointer;
@@ -3286,7 +3288,7 @@ li.ge_panel_tab {
     margin-bottom: 8px;
     letter-spacing: .05em;
     font-face: monospace;
-    font-size: 14px
+    font-size: 14px;
 }
 
 li.ge_panel_tab_active {
@@ -3317,7 +3319,8 @@ a.ge_panel_tab_close {
     font-size: 14px;
     line-height: 1.4;
     height: auto;
-    z-index: 100
+    z-index: 100;
+
 }
 
 .CodeMirror-linenumbers {
@@ -3352,16 +3355,16 @@ a.ge_panel_tab_close {
     margin: 0;
     padding: 0;
     z-index: 200;
-		width:432px;
-		height:936px;
+    width:306px;
+    height:612px;
 }
 
 .ge_canvas {
     margin: 0;
     padding: 0;
     z-index: 200;
-		width:432px;
-		height:936px;
+    width:306px;
+    height:612px;
 }
 
 .ge_control {
