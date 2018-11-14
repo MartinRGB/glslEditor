@@ -18207,8 +18207,8 @@ var GlslCanvas = (function () {
         this.vbo = {};
         this.isValid = false;
 
-        this.vertexString = options.vertexString || '\n#ifdef GL_ES\nprecision mediump float;\n#endif\n\nattribute vec2 a_position;\nattribute vec2 a_texcoord;\n\nvarying vec2 v_texcoord;\n\nvoid main() {\n    gl_Position = vec4(a_position, 0.0, 1.0);\n    v_texcoord = a_texcoord;\n}\n';
-        this.fragmentString = options.fragmentString || '\n#ifdef GL_ES\nprecision mediump float;\n#endif\n\nvarying vec2 v_texcoord;\n\nvoid main(){\n    gl_FragColor = vec4(0.0);\n}\n';
+        this.vertexString = options.vertexString || '\n#ifdef GL_ES\nprecision highp float;\n#endif\n\nattribute vec2 a_position;\nattribute vec2 a_texcoord;\n\nvarying vec2 v_texcoord;\n\nvoid main() {\n    gl_Position = vec4(a_position, 1.0, 1.0);\n    v_texcoord = a_texcoord;\n}\n';
+        this.fragmentString = options.fragmentString || '\n#ifdef GL_ES\nprecision highp float;\n#endif\n\nvarying vec2 v_texcoord;\n\nvoid main(){\n    gl_FragColor = vec4(0.0);\n}\n';
 
         // GL Context
         var gl = (0, _glGl.setupWebGL)(canvas, options);
@@ -18606,8 +18606,38 @@ var GlslCanvas = (function () {
                 // set the resolution uniform
                 this.uniform('2f', 'vec2', 'u_resolution', this.canvas.width, this.canvas.height);
 
-                this.uniform('1f', 'float', 'u_slot1', slot1Spring.getCurrentValue());
-                this.uniform('1f', 'float', 'u_slot2', slot2Spring.getCurrentValue());
+                this.createUniform = (function (startVal,type,uniformName,val) 
+                  {
+   
+                    if(typeof(val) == 'number'){
+
+                      this.uniform(startVal,type,uniformName,parseFloat(val));
+                    }
+                    else if(typeof(val) == 'boolean'){
+                      this.uniform(startVal,type,uniformName,val);
+                    }
+                    else if(typeof(val) == 'object'){
+                      this.uniform(startVal,type,uniformName,val[0],val[1],val[2]);
+                    }
+                  }
+                );
+
+                this.createUniform3f = (function (startVal,type,uniformName,val0,val1,val2) 
+                {
+ 
+                  this.uniform(startVal,type,uniformName,val0,val1,val2);
+                });
+
+                this.createUniform2f = (function (startVal,type,uniformName,val0,val1) 
+                {
+                  this.uniform(startVal,type,uniformName,val0,val1);
+                });
+
+
+                // this.uniform('1f', 'float', 'u_slot1', slot1Spring.getCurrentValue());
+                // this.uniform('1f', 'float', 'u_slot2', slot2Spring.getCurrentValue());
+
+                // console.log(this)
 
                 this.texureIndex = 0;
                 for (var tex in this.textures) {
@@ -19953,7 +19983,7 @@ var _crossStorage = _dereq_('cross-storage');
 
 var STORAGE_LAST_EDITOR_CONTENT = 'last-content';
 
-var EMPTY_FRAG_SHADER = '// Author:\n// Title:\n\n#ifdef GL_ES\nprecision mediump float;\n#endif\n\nuniform vec2 u_resolution;\nuniform vec2 u_mouse;\nuniform float u_time;\nuniform sampler2D u_tex0;\nuniform vec2 u_tex0Resolution;\nuniform float u_slot1;\nuniform float u_slot2;\n//Shader Toy Basic Uniform\n#define iTime u_time\n#define iResolution u_resolution\n#define iMouse u_mouse\n\nvoid main() {\n    vec2 st = gl_FragCoord.xy/u_resolution.xy;\n    st.x *= u_resolution.x/u_resolution.y;\n\n    vec3 color = vec3(0.);\n    color = vec3(st.x,st.y,abs(sin(u_time))) + texture2D(u_tex0,st).xyz;\n\n    gl_FragColor = vec4(color,1.0);\n}';
+var EMPTY_FRAG_SHADER = '// Author:\n// Title:\n\n#ifdef GL_ES\nprecision highp float;\n#endif\n\nuniform vec2 u_resolution;\nuniform vec2 u_mouse;\nuniform float u_time;\nuniform sampler2D u_tex0;\nuniform vec2 u_tex0Resolution;\nuniform sampler2D u_tex1;\nuniform vec2 u_tex1Resolution;\nuniform sampler2D u_tex2;\nuniform vec2 u_tex2Resolution;\nuniform sampler2D u_tex3;\nuniform vec2 u_tex3Resolution;\nuniform sampler2D u_tex4;\nuniform vec2 u_tex4Resolution;\nuniform sampler2D u_tex5;\nuniform vec2 u_tex5Resolution;\nuniform float u_slot1;\nuniform float u_slot2;\nuniform float u_slot3;\nuniform float u_slot4;\n//Shader Toy Basic Uniform\n#define iTime u_time\n#define iResolution u_resolution\n#define iMouse u_mouse\n\nvoid main() {\n    vec2 st = gl_FragCoord.xy/u_resolution.xy;\n    st.x *= u_resolution.x/u_resolution.y;\n\n    vec3 color = vec3(0.);\n    color = vec3(st.x,st.y,abs(sin(u_time))) + texture2D(u_tex0,st).xyz;\n\n    gl_FragColor = vec4(color,1.0);\n}';
 
 var GlslEditor = (function () {
     function GlslEditor(selector, options) {
@@ -20396,6 +20426,8 @@ function initEditor(main) {
 
     main.container.appendChild(el);
 
+    //document.getElementById('control_panel').appendChild(el);
+
     var cm = (0, _codemirror2['default'])(el, {
         value: main.options.frag,
         viewportMargin: Infinity,
@@ -20500,6 +20532,7 @@ var Shader = (function () {
 
         this.canvas = glslcanvas;
 
+
         if (this.options.imgs && this.options.imgs.length > 0) {
             for (var i in this.options.imgs) {
                 this.canvas.setUniform('u_tex' + i, this.options.imgs[i]);
@@ -20512,6 +20545,8 @@ var Shader = (function () {
         this.canvas.on('render', function () {
             _this.media_capture.completeScreenshot();
         });
+
+
 
         if (main.options.displayMenu) {
             // CONTROLS
@@ -20527,14 +20562,24 @@ var Shader = (function () {
             this.controls.playPause = new _uiMenuItem2['default'](this.control_pannel, 'ge_control_element', '<i class="material-icons">pause</i>', function (event) {
                 event.stopPropagation();
                 event.preventDefault();
+                // this.createControlCallback =(function (attribute,container,className,name,createCallback) 
+                // {
+                //   attribute = new _MenuItem2['default'](container, className,name, createCallback);
+                // }
+                // );
+                // _this.controls.playPause.shouldPlay  = false;
+
+                
                 if (glslcanvas.paused) {
                     glslcanvas.play();
-                    // this.controls.playPause.name = '<i class="material-icons">pause</i>';//'Pause';
                     _this.controls.playPause.name = '<i class="material-icons">pause</i>'; //'Pause';
+                    _this.controls.playPause.shouldPlay  = true;
+
                 } else {
                         glslcanvas.pause();
                         _this.controls.playPause.name = '<i class="material-icons">play_arrow</i>'; //'Play';
-                    }
+                        _this.controls.playPause.shouldPlay  = false;
+                  }
             });
             // rec
             this.isCapturing = false;
@@ -20568,16 +20613,19 @@ var Shader = (function () {
                 _this.showControls();
             });
             this.el_control.addEventListener('mouseleave', function (event) {
-                _this.hideControls();
+                //Martin Change
+                // _this.hideControls();
             });
             this.el_canvas.addEventListener('mousemove', function (event) {
                 if (event.offsetY > _this.el_canvas.clientHeight * .66) {
                     _this.showControls();
                 } else {
-                    _this.hideControls();
+                    //Martin Change
+                    // _this.hideControls();
                 }
             });
-            this.hideControls();
+            // Martin Change
+            // this.hideControls();
         }
 
         // ========== EVENTS
@@ -22499,6 +22547,7 @@ var Menu = function Menu(main) {
         main['new']();
     });
 
+
     // OPEN
     this.fileInput = document.createElement('input');
     this.fileInput.setAttribute('type', 'file');
@@ -22517,6 +22566,7 @@ var Menu = function Menu(main) {
     this.menus.test = new _MenuItem2['default'](this.el, 'ge_menu', '<i class="material-icons">timeline</i> Test', function (event) {
         main.visualDebugger.check();
     });
+
 
     // SHARE
     this.menus.share = new _MenuItem2['default'](this.el, 'ge_menu', '<i class="material-icons">arrow_upward</i> Export', function (event) {
@@ -22542,31 +22592,40 @@ var Menu = function Menu(main) {
             }
     });
 
+
+    this.menus.createItems =(function (attribute,container,className,name,createCallback) 
+      {
+        attribute = new _MenuItem2['default'](container, className,name, createCallback);
+      }
+    );
+
+
     // 添加插槽
-    var isSwitch = false;
+    // var isSwitch = false;
 
-    this.menus.slot1 = new _MenuItem2['default'](this.el, 'ge_menu', 'S1', function (event) {
-      if(isSwitch){
-        slot1Spring.setEndValue(0);
-      }
-      else{
-        slot1Spring.setEndValue(1);
-      }
-      isSwitch = !isSwitch;
-    });
+    // this.menus.slot1 = new _MenuItem2['default'](this.el, 'ge_menu', 'S1', function (event) {
+    //   if(isSwitch){
+    //     slot1Spring.setEndValue(0);
+    //   }
+    //   else{
+    //     slot1Spring.setEndValue(1);
+    //   }
+    //   isSwitch = !isSwitch;
+    // });
 
-    this.menus.vPageTurn = new _MenuItem2['default'](this.el, 'ge_menu', 'S2-0', function (event) {
-      slot2Spring.setEndValue(0);
-    });
-    this.menus.vPageTurn = new _MenuItem2['default'](this.el, 'ge_menu', 'S2-1', function (event) {
-      slot2Spring.setEndValue(1);
-    });
-    this.menus.vPageTurn = new _MenuItem2['default'](this.el, 'ge_menu', 'S2-2', function (event) {
-      slot2Spring.setEndValue(2);
-    });
-    this.menus.vPageTurn = new _MenuItem2['default'](this.el, 'ge_menu', 'S2-3', function (event) {
-      slot2Spring.setEndValue(3);
-    });
+    // this.menus.vPageTurn = new _MenuItem2['default'](this.el, 'ge_menu', 'S2-0', function (event) {
+    //   slot2Spring.setEndValue(0);
+    // });
+    // this.menus.vPageTurn = new _MenuItem2['default'](this.el, 'ge_menu', 'S2-1', function (event) {
+    //   slot2Spring.setEndValue(1);
+    // });
+    // this.menus.vPageTurn = new _MenuItem2['default'](this.el, 'ge_menu', 'S2-2', function (event) {
+    //   slot2Spring.setEndValue(2);
+    // });
+    // this.menus.vPageTurn = new _MenuItem2['default'](this.el, 'ge_menu', 'S2-3', function (event) {
+    //   slot2Spring.setEndValue(3);
+    // });
+
 
     main.container.appendChild(this.el);
 };

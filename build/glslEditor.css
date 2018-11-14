@@ -3355,16 +3355,16 @@ a.ge_panel_tab_close {
     margin: 0;
     padding: 0;
     z-index: 200;
-    width:306px;
-    height:612px;
+    width:300px;
+    height:650px;
 }
 
 .ge_canvas {
     margin: 0;
     padding: 0;
     z-index: 200;
-    width:306px;
-    height:612px;
+    width:300px;
+    height:650px;
 }
 
 .ge_control {

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>GLSL Editor</title>
+        <link href="/favicon.gif" rel="shortcut icon"/>
+        <link type="text/css" rel="stylesheet" href="build/glslEditor.css">
+        <link type="text/css" rel="stylesheet" href="custom/oppoSet.css">
+        <script type="text/javascript" src="custom/stats.js"></script>
+        <script type="text/javascript" src='custom/rebound.js'></script>
+        <script type="text/javascript" src="build/glslEditor.js"></script>
+	</head>
+	<body>
+        <div id="glsl_editor"></div>
+        <div id="mockup">
+            <img id="mockup-img" src="./img/findx_highlight.png">
+        </div>
+        <div class="btn-area">
+            <input class="tgl tgl-ios" id="cb2" type="checkbox"/>
+            <label class="tgl-btn" for="cb2"></label>
+            <p class="show_code_text">展示代码</p>
+        </div>
+        <div class="control_panel" id="control_panel">
+            <div class="control_content">
+                <h2 class="panel_title">Themes</h2>
+                <div class="radiot_group" id="radiot_group">
+                </div>
+                <h2 class="panel_title">Parameters</h2>
+                <div class="slider_group" id="slider_group"></div>
+            </div>
+        </div>
+	</body>
+
+    <script type="text/javascript">
+    	window.glslEditor = new GlslEditor('#glsl_editor', {
+    		canvas_size: 500,
+            canvas_draggable: false,
+            canvas_resizable: false,
+    		theme: 'monokai',
+    		multipleBuffers: true,
+            watchHash: true,
+            fileDrops: true,
+            menu: true,
+            canvas_texture: ["data/noise10.jpg","data/noise5.jpg","data/noise4.jpg","data/noise.jpg","data/noise2.jpg","data/scrollview.png","data/noise11.jpg"]
+    	});
+        document.body.style.backgroundColor = window.getComputedStyle(glslEditor.editor.getWrapperElement(),null).getPropertyValue('background-color');
+
+
+    </script>
+     <script type="text/javascript" src="custom/custom.js"></script>
+</html>

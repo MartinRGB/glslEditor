@@ -1,0 +1,273 @@
+{
+	"name" : "lightflow dynamic wallpaper",
+	"uid" : "1",
+	"implement" : "LightflowProgram",
+	"description" : {
+		"title" : "光流",
+		"contentDescription" : "lightflow dynamic wallpaper",
+		"copyright" :  "2010-2020, OPPO Mobile Comm Corp., Ltd.",
+		"version" : "1",
+		"versionCode" : "1000"
+	},
+	"presents" : [
+		{
+			"title" : "First",
+			"translation" : "主题1",
+			"arguments" : [
+				{
+					"name" : "uSpaceScale",
+					"type" : "vec1",
+					"translation": "比例",
+					"value":["0.6"]
+				},
+				{
+					"name" : "uBlurness",
+					"type" : "vec1",
+					"translation": "模糊度",
+					"value" : ["1.5"]
+				},
+				{
+					"name" : "uBrightness",
+					"type" : "vec1",
+					"translation": "亮度",
+					"value" : ["0.5"]
+				},
+				{
+					"name" : "uColorValue1",
+					"type" : "color",
+					"translation": "混合色",
+					"value" : ["1.0", "1.0", "1.0"]
+				},
+				{
+					"name" : "uSpeed",
+					"type" : "vec1",
+					"translation": "速度",
+					"value" : ["0.4"]
+				},
+				{
+					"name" : "uOpenGradient",
+					"type" : "boolean",
+					"translation": "开启渐变",
+					"value" : false
+				}
+
+
+			]
+		},
+		{
+			"title" : "Second",
+			"translation" : "主题2",
+			"arguments" : [
+				{
+					"name" : "uSpaceScale",
+					"type" : "vec1",
+					"translation": "比例",
+					"value":["0.24"]
+				},
+				{
+					"name" : "uBlurness",
+					"type" : "vec1",
+					"translation": "模糊度",
+					"value" : ["3.5"]
+				},
+				{
+					"name" : "uBrightness",
+					"type" : "vec1",
+					"translation": "亮度",
+					"value" : ["0.5"]
+				},
+				{
+					"name" : "uColorValue1",
+					"type" : "color",
+					"translation": "混合色",
+					"value" : ["1.0", "1.0", "1.0"]
+				},
+				{
+					"name" : "uSpeed",
+					"type" : "vec1",
+					"translation": "速度",
+					"value" : ["0.2"]
+				},
+				{
+					"name" : "uOpenGradient",
+					"type" : "boolean",
+					"translation": "开启渐变",
+					"value" : false
+				}
+			]
+		},
+		{
+			"title" : "Custom",
+			"translation" : "自定义",
+			"arguments" : [
+				{
+					"name" : "uSpaceScale",
+					"type" : "vec1",
+					"translation": "比例",
+					"value":["0.6"]
+				},
+				{
+					"name" : "uBlurness",
+					"type" : "vec1",
+					"translation": "模糊度",
+					"value" : ["1.5"]
+				},
+				{
+					"name" : "uBrightness",
+					"type" : "vec1",
+					"translation": "亮度",
+					"value" : ["0.5"]
+				},
+				{
+					"name" : "uColorValue1",
+					"type" : "color",
+					"translation": "混合色",
+					"value" : ["1.0", "1.0", "1.0"]
+				},
+				{
+					"name" : "uSpeed",
+					"type" : "vec1",
+					"translation": "速度",
+					"value" : ["0.4"]
+				},
+				{
+					"name" : "uOpenGradient",
+					"type" : "boolean",
+					"translation": "开启渐变",
+					"value" : true
+				}
+			]
+		}
+	],
+    "mesh" : {
+        "vertex" : {
+			"name" : "aPosition",
+			"value" : [
+				 "1.0", "-1.0", "0.0",
+				 "-1.0", "-1.0", "0.0",
+				 "1.0", "1.0", "0.0",
+				 "-1.0", "1.0", "0.0"
+			],
+			"size" : "3",
+			"normalized" : "false",
+			"stride" : "12"
+		},
+		"coordinate" : {
+			"name" : "aTextureCoordinate",
+			"value" : [
+				"1.0", "0.0",
+				"0.0", "0.0",
+				"1.0", "1.0",
+				"0.0", "1.0"
+			],
+			"size" : "2",
+			"normalized" : "false",
+			"stride" : "8"
+		}
+    },
+	"program" : {
+	    "arguments" : [
+            {
+                "access" : "attribute",
+				"type" : "float",
+				"name"   : "aPosition"
+            },
+			{
+				"access" : "attribute",
+				"type" : "float",
+				"name"   : "aTextureCoordinate"
+			},
+			{
+                "access" : "uniform",
+				"type"  : "float",
+				"name"   : "uTime"
+            },
+			{
+                "access" : "uniform",
+				"type"   : "float",
+				"name"   : "uResolution"
+            },
+			{
+				"access" : "uniform",
+				"type"   : "float",
+				"name"   : "uSpaceScale"
+			},
+			{
+				"access" : "uniform",
+				"type"   : "float",
+				"name"   : "uSpaceTranslate"
+			},
+			{
+                "access" : "uniform",
+				"type"   : "float",
+				"name"   : "uSensorX"
+            },
+			{
+                "access" : "uniform",
+				"type"   : "float",
+				"name"   : "uSensorY"
+            },
+			{
+                "access" : "uniform",
+				"type"   : "float",
+				"name"   : "uSensorZ"
+            },
+			{
+                "access" : "uniform",
+				"type"   : "float",
+				"name"   : "uScreenValue"
+            },
+			{
+				"access" : "uniform",
+				"type"   : "float",
+				"name"   : "uTestValue2"
+			},
+			{
+				"access" : "uniform",
+				"type"   : "float",
+				"name"   : "uColorValue1"
+			},
+			{
+				"access" : "uniform",
+				"type"   : "float",
+				"name"   : "uColorValue2"
+			},
+			{
+				"access" : "uniform",
+				"type"   : "float",
+				"name"   : "uPageturn"
+			},
+			{
+				"access" : "uniform",
+				"type"   : "float",
+				"name"   : "uFluid"
+			},
+			{
+				"access" : "uniform",
+				"type"   : "float",
+				"name"   : "uBrightness"
+			},
+			{
+				"access" : "uniform",
+				"type"   : "sampler_2D",
+				"name"   : "uTexture"
+			}
+        ],
+		"shader" : [{
+			"type" : "VertexShader",
+			"reference" : "vertex_shader.vsr",
+			"source" : ""
+		},
+		{
+			"type" : "FragmentShader",
+			"reference" : "fragment_shader.fsr",
+		    "source" : ""
+		}],
+		"texture" : [{
+			"name"   : "uTexture",
+			"type" : "sampler_2D",
+			"reference" : ["noise.png"]
+		}]
+	}
+    
+}
