@@ -48,7 +48,7 @@
         <script type="text/javascript">
 
             var springSystem = new rebound.SpringSystem();
-            var slot1Spring = springSystem.createSpring(0, 10);
+            var slot1Spring = springSystem.createSpring(80, 40);
             var slot2Spring = springSystem.createSpring(80, 20);
 
             slot1Spring.addListener({
@@ -78,9 +78,11 @@
             watchHash: true,
             fileDrops: true,
             menu: true,
-            canvas_texture: ["data/noise6.jpg","data/noise7.png","data/noise3.png","data/noise9.png","data/noise2.jpg","data/scrollview.png"]
+            canvas_texture: ["data/noise6.jpg","data/noise7.png","data/noise3.png","data/noise9.png","data/noise2.jpg","data/origin_smoke_noise_copy2.png","data/origin_smoke_noise_2n.png"]
 
     	});
         document.body.style.backgroundColor = window.getComputedStyle(glslEditor.editor.getWrapperElement(),null).getPropertyValue('background-color');
+
+        console.log(window.glslEditor)
     </script>
 </html>
