@@ -14,7 +14,30 @@
 
 			#glsl_editor {
 				height: 100%;
-			}
+            }
+            @media (max-width: 600px) {
+
+                /* .ge_menu_bar{
+                    display: none;
+                } */
+
+                .ge_editor{
+                    display: none;
+                }
+                .ge_canvas {
+                    width: 100% !important;
+                    height: 100% !important;
+                }
+
+                .ge_canvas_container {
+                    top: 0px !important;
+                    cursor: none !important;
+                    left: 0px !important;
+                    width: 100% !important;
+                    height: 100% !important;
+                }
+            }
+
 		</style>
 	</head>
 	<body>
@@ -78,7 +101,7 @@
             watchHash: true,
             fileDrops: true,
             menu: true,
-            canvas_texture: ["data/noise6.jpg","data/noise7.png","data/noise3.png","data/noise9.png","data/noise2.jpg","data/origin_smoke_noise_orig.png","data/origin_smoke_noise_2n.png"]
+            canvas_texture: ["data/normal_mapping.png","data/noise7.png","data/noise3.png","data/noise9.png","data/noise2.jpg","data/origin_smoke_noise_orig.png","data/origin_smoke_noise_2n.png"]
 
     	});
         document.body.style.backgroundColor = window.getComputedStyle(glslEditor.editor.getWrapperElement(),null).getPropertyValue('background-color');

@@ -14,7 +14,7 @@ uniform sampler2D u_tex6;
 varying vec2 v_texcoord;
 
 void main() {
-    vec2 st =  vec2(v_texcoord.x/234.*108.,v_texcoord.y)*4.;
+    vec2 st =  vec2(v_texcoord.x,v_texcoord.y)*4.;
     vec3 color = vec3(0.0);
 
 
