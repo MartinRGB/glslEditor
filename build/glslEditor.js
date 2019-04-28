@@ -18197,8 +18197,6 @@ var GlslCanvas = (function () {
         this.width = canvas.clientWidth;
         this.height = canvas.clientHeight;
 
-
-
         this.canvas = canvas;
         this.gl = undefined;
         this.program = undefined;

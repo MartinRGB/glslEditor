@@ -29,7 +29,7 @@ uniform float u_slot2;
 #define uBrightness 0.65
 #define uSpeed 1.0
 
-#define iChannel0 u_tex6
+#define iChannel0 u_tex5
 
 vec2 computeUV(in vec2 uv,in float k,in float kcube ){
     
